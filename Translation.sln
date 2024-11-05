@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translation.Application", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translation.Infrastructure", "Translation.Infrastructure\Translation.Infrastructure.csproj", "{120C618A-7A0F-4A46-89CB-60887BE8430E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translation.ConsoleApp", "Translation.ConsoleApp\Translation.ConsoleApp.csproj", "{260BBE79-CBC3-4023-9C72-99A5A51FCC96}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{120C618A-7A0F-4A46-89CB-60887BE8430E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{120C618A-7A0F-4A46-89CB-60887BE8430E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{120C618A-7A0F-4A46-89CB-60887BE8430E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{260BBE79-CBC3-4023-9C72-99A5A51FCC96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{260BBE79-CBC3-4023-9C72-99A5A51FCC96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{260BBE79-CBC3-4023-9C72-99A5A51FCC96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{260BBE79-CBC3-4023-9C72-99A5A51FCC96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
