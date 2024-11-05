@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option csharp_namespace = "TranslationServerApp";
+
+package translation;
+
+service Translator {
+    rpc GetInfo(InfoRequest) returns (InfoResponse);
+    rpc Translate(TranslateRequest) returns (TranslateResponse);
+}
+
+message InfoRequest {}
+
+message InfoResponse {
+    string external_service_name = 1;
+    string cache_type = 2;
+    int32 cache_size = 3;
+}
+
+message TranslateRequest {
+    repeated string texts = 1;
+    string from_language = 2;
+    string to_language = 3;
+}
+
+message TranslateResponse {
+    repeated string translated_texts = 1;
+}
