@@ -4,19 +4,19 @@ using System.Text.Json;
 using Translation.Application.Interfaces;
 using Translation.Domain.Models;
 
-namespace Translation.Infrastructure.Service
+namespace Translation.Infrastructure.Services
 {
     public class TranslationService : ITranslationService
     {
         private readonly HttpClient _httpClient;
+        private readonly ICacheService _cacheService;
         private readonly string _apiKey;
 
-        private static readonly HashSet<string> _cacheKeys = new HashSet<string>();
-
-        public TranslationService(HttpClient httpClient, IConfiguration configuration)
+        public TranslationService(HttpClient httpClient, IConfiguration configuration, ICacheService cacheService)
         {
             _httpClient = httpClient;
             _apiKey = configuration["GoogleTranslateApiKey"];
+            _cacheService = cacheService;
         }
 
         public async Task<TranslationResponse> TranslateAsync(TranslationRequest request)
@@ -27,9 +27,16 @@ namespace Translation.Infrastructure.Service
             {
                 var cacheKey = $"translate:{text}_{request.FromLanguage}_{request.ToLanguage}";
 
-                var translation = await TranslateTextAsync(text, request.FromLanguage, request.ToLanguage);
+                var cachedTranslation = await _cacheService.GetCachedValueAsync(cacheKey);
+                if (cachedTranslation != null)
+                {
+                    translations.Add(cachedTranslation);
+                    continue;
+                }
 
-                _cacheKeys.Add(cacheKey);
+                var translation = await TranslateTextAsync(text, request.FromLanguage, request.ToLanguage);
+                await _cacheService.SetCachedValueAsync(cacheKey, translation);
+
                 translations.Add(translation);
             }
 
@@ -75,7 +82,7 @@ namespace Translation.Infrastructure.Service
             {
                 ExternalServiceName = "Google Translate API",
                 CacheType = "In-Memory",
-                CacheSize = _cacheKeys.Count
+                CacheSize = _cacheService.CacheSize
             };
         }
     }
