@@ -1,16 +1,16 @@
 using Translation.Application.Interfaces;
 using Translation.GrpcService.Services;
-using Translation.Infrastructure.Service;
+using Translation.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddHttpClient();
 
 var services = builder.Services;
 
 services.AddGrpc();
 services.AddMemoryCache();
-services.AddSingleton<ITranslationService, TranslationService>();
-services.AddScoped<TranslationGrpcService>();
+builder.Services.AddHttpClient<TranslationService>();
+builder.Services.AddSingleton<ICacheService, MemoryCacheService>();
+builder.Services.AddTransient<ITranslationService, TranslationService>();
 
 var app = builder.Build();
 
